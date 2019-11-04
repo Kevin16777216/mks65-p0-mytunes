@@ -1,11 +1,11 @@
 #include "LinkList.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-void print_list (struct song_node *list)
-{
+void print_list(struct song_node *list){
   if(!list){
-    printf("[]");
+    printf("[]\n");
     return;
   }
   printf ("[");
@@ -14,15 +14,22 @@ void print_list (struct song_node *list)
     printf ("%s by %s", list->name, list->artist);
     //Check if last element, if so, don't use comma and exit
     if (!(list->next))break;
-    printf (",");
+    printf (", ");
     //go to next element
     list = list->next;
   }
   printf ("]\n");
 }
 
-struct song_node * insert_front (struct song_node *list, char *artist, char *name)
-{
+void print_song(struct song_node *song){
+  if(song){
+    printf("%s by %s\n", song->name, song->artist);
+  } else{
+    printf("Song not found!\n");
+  }
+}
+
+struct song_node * insert_front(struct song_node *list, char *artist, char *name){
   struct song_node *n = malloc (sizeof (struct song_node));
   //set value
   strncpy (n->artist, artist, sizeof (n->artist));
@@ -78,7 +85,12 @@ struct song_node * insert(struct song_node * front, struct song_node * new_song)
 }
 
 struct song_node * search_song(struct song_node * front, char * artist, char * name){
-
+  struct song_node *song = front;
+  while(song){
+    if((!strcmp(song->artist, artist)) && (!strcmp(song->name, name)))return song;
+    song = song->next;
+  }
+  return NULL;
 }
 
 struct song_node * search_artist(struct song_node * front, char * artist){
@@ -95,7 +107,7 @@ struct song_node * free_list (struct song_node *list)
   while (list)
   {
     struct song_node *next = list->next;
-    printf ("Freeing song %s by %s\n", list->name, list->artist);
+    printf ("Freeing %s by %s\n", list->name, list->artist);
     free (list);
     list = next;
   }
@@ -130,6 +142,20 @@ struct song_node * remove_node (struct song_node *front, char *artist, char *nam
   return front;
 }
 
+int sizeList(struct song_node *front){
+  struct song_node * list = front;
+  int n = 0;
+  while(list){
+    list = list->next;
+    n++;
+  }
+  return n;
+}
 struct song_node * random_node(struct song_node *front){
-  
+  int i = sizeList(front);
+  int j = rand() % i;
+  for(i = 0; i < j; i++){
+    front = front-> next;
+  }
+  return front;
 }
