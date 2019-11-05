@@ -5,7 +5,7 @@
 
 void add_song(struct song_library *lib, struct song_node *song){
   int ch = getBucket(song->artist[0]);
-
+  printf("Adding %s by %s\n",song->name,song->artist);
   lib->main_table[ch] = insert(lib->main_table[ch], song);
 }
 int getBucket(char *str){
@@ -31,7 +31,7 @@ void make_song(struct song_library *lib, char *artist, char *song){
 void setup_lib(struct song_library *lib){
   int i;
   for(i = 0; i < 27; i++){
-    lib->main_table[i] = malloc(sizeof(struct song_node *));
+    lib->main_table[i] = malloc(sizeof(struct song_node));
     lib->main_table[i] = 0;
   }
 }
@@ -39,7 +39,7 @@ void setup_lib(struct song_library *lib){
 void reset_lib(struct song_library *lib){
   int i;
   for(i = 0; i < 27; i++){
-    lib->main_table[i] = realloc(lib->main_table[i], sizeof(struct song_node *));
+    lib->main_table[i] = realloc(lib->main_table[i], sizeof(struct song_node));
     lib->main_table[i] = 0;
   }
 }
@@ -49,10 +49,11 @@ struct song_library* clear_library(struct song_library *lib){
   int i;
   for(i = 0; i < 27; i++){
     lib->main_table[i] = free_list(lib->main_table[i]);
+    free(lib->main_table[i]);
   }
-  //reset_lib(lib);
   return lib;
 }
+
 void print_library(struct song_library *lib){
   printf("Printing List...\n");
   int i;

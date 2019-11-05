@@ -3,9 +3,12 @@
 #include <time.h>
 #include "LinkList.h"
 #include "SongLibrary.h"
+//almost done? I can help rne. So after I clear the list, I cant' add any more nodes and i'm not sure whhy
+//I'll check the clear func first
+//can you see the chatbox on the bottom right corner yes
 int main(void) {
   srand(time(NULL));
-  struct song_library * playlist = malloc(sizeof(struct song_library *));
+  struct song_library * playlist = malloc(sizeof(struct song_library));
   setup_lib(playlist);
   make_song(playlist,"green day", "wake me up when september ends");
   make_song(playlist,"good charlotte", "the anthem");
@@ -19,7 +22,7 @@ int main(void) {
   make_song(playlist, "green day", "delcome to paradise");
   make_song(playlist, "good charlotte", "lifestyles of the rich & famous");
   make_song(playlist, "weezer", "beverly hills");
-
+  printf("======================\n");
   printf("LINKED LIST TESTS\n");
   printf("======================\n");
   printf("Testing print_list:\n");
@@ -87,6 +90,7 @@ int main(void) {
   printf("Testing clear_library:\n");
   playlist = clear_library(playlist);
   print_library(playlist);
-  printf("----------------------\n"); 
+  printf("----------------------\n");
+  
   return 0;
 }
