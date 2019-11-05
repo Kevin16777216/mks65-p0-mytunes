@@ -11,7 +11,7 @@ main.o: main.c LinkList.h SongLibrary.h
 	$(CC) -c main.c
 
 SongLibrary.o: SongLibrary.c SongLibrary.h LinkList.h
-  $(CC) -c SongLibrary.c
+	$(CC) -c SongLibrary.c
 
 LinkList.o: LinkList.c LinkList.h
 	$(CC) -c LinkList.c
